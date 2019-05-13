@@ -45,7 +45,11 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> loginUser(@RequestBody User user) {
 		try {
-			User currentUser = userService.getUserByUserID(user.getUserID().toString());
+			User currentUser = null;
+			if(user.getUserID() != null) {
+				currentUser = userService.getUserByUserID(user.getUserID().toString());
+				System.out.println(currentUser);
+			}
 			Map<String, String> response = new HashMap();
 			if(currentUser != null) {
 				if(currentUser.getPassword().equals(user.getPassword())) {			
