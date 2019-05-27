@@ -1,10 +1,17 @@
 package bookmnagement.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 
@@ -35,6 +42,19 @@ public class Book {
 	
 	@Column
 	private String title;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+			name="book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name="id"))
+	private List<Genre> genre_id;
+	
+
+	public List<Genre> getGenre_id() {
+		return genre_id;
+	}
+	public void setGenre_id(List<Genre> genre_id) {
+		this.genre_id = genre_id;
+	}
 	public long getId() {
 		return id;
 	}
